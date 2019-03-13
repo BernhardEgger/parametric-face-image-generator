@@ -406,7 +406,8 @@ object FacesSettingsJsonFormatV1 {
   implicit val MorphableModelParametersFormat: RootJsonFormat[MorphableModelParameters] = new RootJsonFormat[MorphableModelParameters] {
     override def write(obj: MorphableModelParameters): JsValue = {
       new JsObjectOrdered(ListMap(
-        ("number-of-ids-to-create", obj.nIds.toJson),
+        ("fixed-Id", obj.fixedId.toJson),
+        ("fixed-Id-Path", obj.fixedIdPath.toJson),
         ("number-of-samples-per-id", obj.nSamples.toJson),
         ("model-filename", obj.modelFn.toJson),
         ("dimension-of-shape-space", obj.nShape.toJson),
@@ -419,7 +420,8 @@ object FacesSettingsJsonFormatV1 {
     override def read(json: JsValue): MorphableModelParameters = {
       val fields = json.asJsObject(s"expected MorphableModelParameters object, got: $json").fields
 
-      val nIds = fields("number-of-ids-to-create").convertTo[Int]
+      val fixedId = fields("fixed-Id").convertTo[Int]
+      val fixedIdPath = fields("fixed-Id-Path").convertTo[String]
       val nSamples = fields("number-of-samples-per-id").convertTo[Int]
       val nShape = fields("dimension-of-shape-space").convertTo[Int]
       val nColor = fields("dimension-of-color-space").convertTo[Int]
@@ -428,7 +430,8 @@ object FacesSettingsJsonFormatV1 {
       val modelFn = fields("model-filename").convertTo[String]
 
       MorphableModelParameters(
-        nIds = nIds,
+        fixedId = fixedId,
+        fixedIdPath = fixedIdPath,
         nSamples = nSamples,
         nShape = nShape,
         nColor = nColor,

@@ -21,7 +21,7 @@ import java.io.File
 import faces.settings.RandomFacesSettings
 import faces.utils.{Helpers, ParametricFaceImageGeneratorOptions}
 import scalismo.faces.color.RGBA
-import scalismo.faces.io.PixelImageIO
+import scalismo.faces.io.{PixelImageIO, RenderParameterIO}
 import scalismo.faces.parameters._
 import scalismo.geometry.Point2D
 import scalismo.utils.Random
@@ -52,80 +52,78 @@ object RandomFaces extends App {
   // RANDOM GENERATOR
   //****************************************************************************
 
-  (0 until nIds).par.foreach( id =>{
-    try {
-      // generate random model instance (shape and color)
-      val rndId = helpers.rndMoMoInstance
-      for (n <- 0 until nSamples) {
-        // add a random expression if activated
-        val momoInstance = if (expressions) helpers.rndExpressions(rndId) else rndId
+  try {
+    // load random model instance (shape and color)
+    val rndId = RenderParameterIO.read(new File(fixedIdPath)).get.momo
+    for (n <- 0 until nSamples) {
+      // add a random expression if activated
+      val momoInstance = if (expressions) helpers.rndExpressions(rndId) else rndId
 
-        // sample a random pose
-        val rndYaw = yawDistribution()
-        val rndPitch = pitchDistribution()
-        val rndRoll = rollDistribution()
-        val rndPose = Pose(
-          pose.scaling,
-          pose.translation,
-          scala.math.toRadians(rndRoll),
-          scala.math.toRadians(rndYaw),
-          scala.math.toRadians(rndPitch))
+      // sample a random pose
+      val rndYaw = yawDistribution()
+      val rndPitch = pitchDistribution()
+      val rndRoll = rollDistribution()
+      val rndPose = Pose(
+        pose.scaling,
+        pose.translation,
+        scala.math.toRadians(rndRoll),
+        scala.math.toRadians(rndYaw),
+        scala.math.toRadians(rndPitch))
 
-        // random scaling of the face in the image
-        val rndCamera = camera.copy(focalLength = camera.focalLength * scalingDistribution())
+      // random scaling of the face in the image
+      val rndCamera = camera.copy(focalLength = camera.focalLength * scalingDistribution())
 
-        // random illumination
-        val rndIll = illuminationPrior.rnd(illumination)
+      // random illumination
+      val rndIll = illuminationPrior.rnd(illumination)
 
-        // put RenderParameters together of all its randomized parts
-        val uncentered = RenderParameter(rndPose, view, rndCamera, rndIll, directionalLight, momoInstance, ImageSize(imageWidth, imageHeight), colorTransform)
+      // put RenderParameters together of all its randomized parts
+      val uncentered = RenderParameter(rndPose, view, rndCamera, rndIll, directionalLight, momoInstance, ImageSize(imageWidth, imageHeight), colorTransform)
 
-        // move face in the middle of the image
-        val centered = if (faceCenter == "facebox") {
-          helpers.centerFaceBox(uncentered)
-        }
-        else if (faceCenter == "landmark") {
-          helpers.centerLandmark(uncentered)
-        }
-        else {
-          uncentered
-        }
+      // move face in the middle of the image
+      val centered = if (faceCenter == "facebox") {
+        helpers.centerFaceBox(uncentered)
+      }
+      else if (faceCenter == "landmark") {
+        helpers.centerLandmark(uncentered)
+      }
+      else {
+        uncentered
+      }
 
-        // add some controlled random translation
-        val rps = centered.copy(camera = centered.camera.copy(
-          principalPoint = Point2D(
-            centered.camera.principalPoint.x + (2.0 * xTranslationDistribution()) / imageWidth,
-            centered.camera.principalPoint.y + (2.0 * yTranslationDistribution()) / imageHeight)
-        ))
+      // add some controlled random translation
+      val rps = centered.copy(camera = centered.camera.copy(
+        principalPoint = Point2D(
+          centered.camera.principalPoint.x + (2.0 * xTranslationDistribution()) / imageWidth,
+          centered.camera.principalPoint.y + (2.0 * yTranslationDistribution()) / imageHeight)
+      ))
 
-        val imageData =
-          for ((postfix, currentRenderer) <- helpers.renderingMethods) yield {
-            if (bg && postfix == "") { // only allow different backgrounds for standard renderings
-              require(helpers.loadBgs.nonEmpty, "no Background files with type " + cfg.backgrounds.bgType + " found in " + cfg.backgrounds.bgPath)
-              val rndBG = helpers.loadBgs(rnd.scalaRandom.nextInt(helpers.loadBgs.length))
-              val rndBGimg = PixelImageIO.read[RGBA](rndBG).get.resample(imageWidth, imageHeight)
-              (currentRenderer.renderImage(rps).zip(rndBGimg).map(p => if (p._1.a < 0.5) p._2 else p._1), postfix)
-            }
-            else {
-              (currentRenderer.renderImage(rps), postfix)
-            }
+      val imageData =
+        for ((postfix, currentRenderer) <- helpers.renderingMethods) yield {
+          if (bg && postfix == "") { // only allow different backgrounds for standard renderings
+            require(helpers.loadBgs.nonEmpty, "no Background files with type " + cfg.backgrounds.bgType + " found in " + cfg.backgrounds.bgPath)
+            val rndBG = helpers.loadBgs(rnd.scalaRandom.nextInt(helpers.loadBgs.length))
+            val rndBGimg = PixelImageIO.read[RGBA](rndBG).get.resample(imageWidth, imageHeight)
+            (currentRenderer.renderImage(rps).zip(rndBGimg).map(p => if (p._1.a < 0.5) p._2 else p._1), postfix)
           }
-
-        // write images and their parameters
-        println(s"Generating \t ID:$id \t Sample:$n")
-        for ((img, postifx) <- imageData) {
-          helpers.writeRenderParametersAndLandmarks(rps, id, n)
-          helpers.writeImg(img, id, n, postifx)
+          else {
+            (currentRenderer.renderImage(rps), postfix)
+          }
         }
+
+      // write images and their parameters
+      println(s"Generating \t ID:$fixedId \t Sample:$n")
+      for ((img, postifx) <- imageData) {
+        helpers.writeRenderParametersAndLandmarks(rps, fixedId, n)
+        helpers.writeImg(img, fixedId, n, postifx)
       }
     }
-    catch{
-      case e: Throwable =>
-        println("Something went wrong with id: " + id)
-        println(s"${e.getMessage}")
-        println(s"${e.getStackTrace}")
-        e.printStackTrace()
-    }
-  })
+  }
+  catch{
+    case e: Throwable =>
+      println("Something went wrong with id: " + fixedId)
+      println(s"${e.getMessage}")
+      println(s"${e.getStackTrace}")
+      e.printStackTrace()
+  }
 
 }

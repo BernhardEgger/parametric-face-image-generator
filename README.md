@@ -1,3 +1,5 @@
+This is a fork of the original image generator. Instead of generating a random identity, the identity is loaded from a rps file.
+
 parametric-face-image-generator
 ===============================
 

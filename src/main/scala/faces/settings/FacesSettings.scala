@@ -56,7 +56,8 @@ case class Backgrounds(
                       )
 
 case class MorphableModelParameters(
-                                     nIds: Int,
+                                     fixedId: Int,
+                                     fixedIdPath: String,
                                      nSamples: Int,
                                      nShape: Int,
                                      nColor: Int,

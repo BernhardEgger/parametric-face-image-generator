@@ -17,7 +17,8 @@
     "render-region-maps": true
   },
   "morphable-model-parameters": {
-    "number-of-ids-to-create": 1,
+    "fixed-Id-Path": "data/1.rps" ,
+    "fixed-Id": 2 ,
     "number-of-samples-per-id": 1,
     "model-filename": "data/bfm2017/model2017-1_bfm_nomouth.h5",
     "dimension-of-shape-space": 199,

@@ -49,7 +49,8 @@ class RandomFacesSettingsTest extends FunSpec with Matchers {
         renderRegionMaps = true
       ),
       MorphableModelParameters(
-        nIds = 2,
+        fixedId = 2,
+        fixedIdPath = "data/1.rps",
         nSamples = 5,
         nShape = 199,
         nColor = 199,
@@ -90,7 +91,7 @@ class RandomFacesSettingsTest extends FunSpec with Matchers {
         "right.nose.wing.tip"
       ),
       IndexedSeq[TextureMappedPropertyDescription](
-        TextureMappedPropertyDescription("default","data/regions/default.json","data/regions/default.png")
+        TextureMappedPropertyDescription("default","data/regions/face12.json","data/regions/default.png")
       ),
       IlluminationParameters(illumination = "multiVariateNormal",
         illuminationPriorFn = "data/bip/parameters/",
@@ -126,7 +127,8 @@ class RandomFacesSettingsTest extends FunSpec with Matchers {
       default.backgrounds.bgPath shouldBe cfg.backgrounds.bgPath
       default.backgrounds.bgType shouldBe cfg.backgrounds.bgType
 
-      default.morphableModelParameters.nIds shouldBe cfg.morphableModelParameters.nIds
+      default.morphableModelParameters.fixedId shouldBe cfg.morphableModelParameters.fixedId
+      default.morphableModelParameters.fixedIdPath shouldBe cfg.morphableModelParameters.fixedIdPath
       default.morphableModelParameters.nSamples shouldBe cfg.morphableModelParameters.nSamples
       default.morphableModelParameters.modelFn shouldBe cfg.morphableModelParameters.modelFn
       default.morphableModelParameters.nShape shouldBe cfg.morphableModelParameters.nShape
@@ -185,7 +187,8 @@ class RandomFacesSettingsTest extends FunSpec with Matchers {
       default.backgrounds.bgPath shouldBe cfg.backgrounds.bgPath
       default.backgrounds.bgType shouldBe cfg.backgrounds.bgType
 
-      default.morphableModelParameters.nIds shouldBe cfg.morphableModelParameters.nIds
+      default.morphableModelParameters.fixedId shouldBe cfg.morphableModelParameters.fixedId
+      default.morphableModelParameters.fixedIdPath shouldBe cfg.morphableModelParameters.fixedIdPath
       default.morphableModelParameters.nSamples shouldBe cfg.morphableModelParameters.nSamples
       default.morphableModelParameters.modelFn shouldBe cfg.morphableModelParameters.modelFn
       default.morphableModelParameters.nShape shouldBe cfg.morphableModelParameters.nShape
@@ -250,7 +253,8 @@ class RandomFacesSettingsTest extends FunSpec with Matchers {
         renderRegionMaps = true
       ),
       MorphableModelParameters(
-        nIds = 2,
+        fixedId = 2,
+        fixedIdPath = "data/1.rps",
         nSamples = 5,
         nShape = 199,
         nColor = 199,
@@ -291,7 +295,7 @@ class RandomFacesSettingsTest extends FunSpec with Matchers {
         "right.nose.wing.tip"
       ),
       IndexedSeq[TextureMappedPropertyDescription](
-        TextureMappedPropertyDescription("default","data/regions/default.json","data/regions/default.png")
+        TextureMappedPropertyDescription("default","data/regions/face12.json","data/regions/default.png")
       ),
       ControlledIlluminationVariation(0 until 10 by 1),
       ControlledPoseVariation(yawRange = -90 to 90 by 45,
@@ -316,7 +320,8 @@ class RandomFacesSettingsTest extends FunSpec with Matchers {
       default.backgrounds.bgPath shouldBe cfg.backgrounds.bgPath
       default.backgrounds.bgType shouldBe cfg.backgrounds.bgType
 
-      default.morphableModelParameters.nIds shouldBe cfg.morphableModelParameters.nIds
+      default.morphableModelParameters.fixedId shouldBe cfg.morphableModelParameters.fixedId
+      default.morphableModelParameters.fixedIdPath shouldBe cfg.morphableModelParameters.fixedIdPath
       default.morphableModelParameters.nSamples shouldBe cfg.morphableModelParameters.nSamples
       default.morphableModelParameters.modelFn shouldBe cfg.morphableModelParameters.modelFn
       default.morphableModelParameters.nShape shouldBe cfg.morphableModelParameters.nShape
@@ -368,7 +373,8 @@ class RandomFacesSettingsTest extends FunSpec with Matchers {
       default.backgrounds.bgPath shouldBe cfg.backgrounds.bgPath
       default.backgrounds.bgType shouldBe cfg.backgrounds.bgType
 
-      default.morphableModelParameters.nIds shouldBe cfg.morphableModelParameters.nIds
+      default.morphableModelParameters.fixedId shouldBe cfg.morphableModelParameters.fixedId
+      default.morphableModelParameters.fixedIdPath shouldBe cfg.morphableModelParameters.fixedIdPath
       default.morphableModelParameters.nSamples shouldBe cfg.morphableModelParameters.nSamples
       default.morphableModelParameters.modelFn shouldBe cfg.morphableModelParameters.modelFn
       default.morphableModelParameters.nShape shouldBe cfg.morphableModelParameters.nShape

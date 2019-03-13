@@ -34,7 +34,8 @@
   "morphable-model-parameters": {
     "__comment-1" : "This block configures how face identities are generated and if they have expressions.",
     "__comment-2" : "You need to download the Basel Face Model and cite the paper in your publication.",
-    "number-of-ids-to-create": 2,
+    "fixed-Id-Path": "data/1.rps" ,
+    "fixed-Id": 2 ,
     "number-of-samples-per-id": 5,
     "model-filename": "data/bfm2017/model2017-1_face12_nomouth.h5",
     "dimension-of-shape-space": 199,
