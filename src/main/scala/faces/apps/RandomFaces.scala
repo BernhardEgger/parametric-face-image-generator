@@ -57,7 +57,18 @@ object RandomFaces extends App {
     val rndId = RenderParameterIO.read(new File(fixedIdPath)).get.momo
     for (n <- 0 until nSamples) {
       // add a random expression if activated
-      val momoInstance = if (expressions) helpers.rndExpressions(rndId) else rndId
+      val momoInstance = {
+        var mouthDistance = maxMouthOpening + 1.0
+        var currentInstance = if (expressions) helpers.rndExpressions(rndId) else rndId
+        while (mouthDistance > maxMouthOpening) {
+          currentInstance = if (expressions) helpers.rndExpressions(rndId) else rndId
+
+          val mouthUpperPoint = helpers.model.instanceAtPoint(currentInstance.coefficients, helpers.upperMouth)._1
+          val mouthLowerPoint = helpers.model.instanceAtPoint(currentInstance.coefficients, helpers.lowerMouth)._1
+          mouthDistance = (mouthUpperPoint - mouthLowerPoint.toVector).toVector.norm2
+        }
+        currentInstance
+      }
 
       // sample a random pose
       val rndYaw = yawDistribution()

@@ -413,7 +413,8 @@ object FacesSettingsJsonFormatV1 {
         ("dimension-of-shape-space", obj.nShape.toJson),
         ("dimension-of-color-space", obj.nColor.toJson),
         ("dimension-of-expression-space", obj.nExpression.toJson),
-        ("add-expressions", obj.expressions.toJson)
+        ("add-expressions", obj.expressions.toJson),
+        ("max-mouth-opening", obj.maxMouthOpening.toJson)
       ))
     }
 
@@ -428,6 +429,7 @@ object FacesSettingsJsonFormatV1 {
       val nExpression = fields("dimension-of-expression-space").convertTo[Int]
       val expressions = fields("add-expressions").convertTo[Boolean]
       val modelFn = fields("model-filename").convertTo[String]
+      val maxMouthOpening = fields("max-mouth-opening").convertTo[Double]
 
       MorphableModelParameters(
         fixedId = fixedId,
@@ -437,7 +439,8 @@ object FacesSettingsJsonFormatV1 {
         nColor = nColor,
         nExpression = nExpression,
         expressions = expressions,
-        modelFn = modelFn
+        modelFn = modelFn,
+        maxMouthOpening = maxMouthOpening
       )
     }
   }

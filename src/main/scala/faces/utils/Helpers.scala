@@ -69,6 +69,9 @@ case class Helpers(cfg: FacesSettings)(implicit rnd: Random) {
     if (expressions) momo else momo.neutralModel
   }
 
+  val upperMouth =  model.landmarkPointId("center.lips.upper.inner").get
+  val lowerMouth =  model.landmarkPointId("center.lips.lower.inner").get
+
   // the renderer for the model
   val renderer  = CorrespondenceMoMoRenderer(model, RGBA.BlackTransparent).cached(5)
 

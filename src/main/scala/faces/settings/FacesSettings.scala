@@ -63,7 +63,8 @@ case class MorphableModelParameters(
                                      nColor: Int,
                                      expressions: Boolean,
                                      nExpression: Int,
-                                     modelFn: String
+                                     modelFn: String,
+                                     maxMouthOpening: Double
                                    )
 
 case class IlluminationParameters(

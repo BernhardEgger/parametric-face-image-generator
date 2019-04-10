@@ -41,7 +41,8 @@
     "dimension-of-shape-space": 199,
     "dimension-of-color-space": 199,
     "dimension-of-expression-space": 100,
-    "add-expressions": true
+    "add-expressions": true,
+    "max-mouth-opening": 7.0
   },
   "illumination-parameters": {
     "__comment-1" : "Choose illumination distribution from Basel Illumination Prior 2017 from 'empirical', 'multiVariateNormal' or 'staticFrontal'.",

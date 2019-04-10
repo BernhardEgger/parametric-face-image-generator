@@ -56,7 +56,8 @@ class RandomFacesSettingsTest extends FunSpec with Matchers {
         nColor = 199,
         expressions = true,
         nExpression = 100,
-        modelFn = "data/bfm2017/model2017-1_face12_nomouth.h5"),
+        modelFn = "data/bfm2017/model2017-1_face12_nomouth.h5",
+        maxMouthOpening = 7.0),
       ImageDimensions(imageWidth = 227,
         imageHeight = 227),
       DefaultParameters(pose = Pose.away1m,
@@ -135,6 +136,7 @@ class RandomFacesSettingsTest extends FunSpec with Matchers {
       default.morphableModelParameters.nColor shouldBe cfg.morphableModelParameters.nColor
       default.morphableModelParameters.nExpression shouldBe cfg.morphableModelParameters.nExpression
       default.morphableModelParameters.expressions shouldBe cfg.morphableModelParameters.expressions
+      default.morphableModelParameters.maxMouthOpening shouldBe cfg.morphableModelParameters.maxMouthOpening
 
       default.illuminationParameters.illumination shouldBe cfg.illuminationParameters.illumination
       default.illuminationParameters.illuminationPriorFn shouldBe cfg.illuminationParameters.illuminationPriorFn
@@ -195,6 +197,7 @@ class RandomFacesSettingsTest extends FunSpec with Matchers {
       default.morphableModelParameters.nColor shouldBe cfg.morphableModelParameters.nColor
       default.morphableModelParameters.nExpression shouldBe cfg.morphableModelParameters.nExpression
       default.morphableModelParameters.expressions shouldBe cfg.morphableModelParameters.expressions
+      default.morphableModelParameters.maxMouthOpening shouldBe cfg.morphableModelParameters.maxMouthOpening
 
       default.illuminationParameters.illumination shouldBe cfg.illuminationParameters.illumination
       default.illuminationParameters.illuminationPriorFn shouldBe cfg.illuminationParameters.illuminationPriorFn
@@ -260,7 +263,8 @@ class RandomFacesSettingsTest extends FunSpec with Matchers {
         nColor = 199,
         expressions = true,
         nExpression = 100,
-        modelFn = "data/bfm2017/model2017-1_face12_nomouth.h5"),
+        modelFn = "data/bfm2017/model2017-1_face12_nomouth.h5",
+        maxMouthOpening = 7.0),
       ImageDimensions(imageWidth = 227,
         imageHeight = 227),
       DefaultParameters(pose = Pose.away1m,
@@ -328,6 +332,7 @@ class RandomFacesSettingsTest extends FunSpec with Matchers {
       default.morphableModelParameters.nColor shouldBe cfg.morphableModelParameters.nColor
       default.morphableModelParameters.nExpression shouldBe cfg.morphableModelParameters.nExpression
       default.morphableModelParameters.expressions shouldBe cfg.morphableModelParameters.expressions
+      default.morphableModelParameters.maxMouthOpening shouldBe cfg.morphableModelParameters.maxMouthOpening
 
       default.illuminationVariation.illuminationDirectionRange shouldBe cfg.illuminationVariation.illuminationDirectionRange
       default.backgroundVariation.backgroundRange shouldBe cfg.backgroundVariation.backgroundRange
@@ -381,6 +386,7 @@ class RandomFacesSettingsTest extends FunSpec with Matchers {
       default.morphableModelParameters.nColor shouldBe cfg.morphableModelParameters.nColor
       default.morphableModelParameters.nExpression shouldBe cfg.morphableModelParameters.nExpression
       default.morphableModelParameters.expressions shouldBe cfg.morphableModelParameters.expressions
+      default.morphableModelParameters.maxMouthOpening shouldBe cfg.morphableModelParameters.maxMouthOpening
 
       default.illuminationVariation.illuminationDirectionRange shouldBe cfg.illuminationVariation.illuminationDirectionRange
       default.backgroundVariation.backgroundRange shouldBe cfg.backgroundVariation.backgroundRange
